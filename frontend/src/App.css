@@ -647,10 +647,30 @@ body {
 /* Print Mode Overrides for html2pdf */
 .container.print-mode {
   background: white !important;
-  padding: 20px !important;
+  color: #2c3e50 !important;
+  padding: 2.5cm !important; /* Margen estándar para PDF */
   box-shadow: none !important;
   border: none !important;
   width: 800px !important; /* Fixed width for consistent PDF scale */
+}
+
+/* Forzar visibilidad absoluta de textos en modo impresión */
+.container.print-mode * {
+  color: #2c3e50 !important;
+  text-shadow: none !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.container.print-mode .section-title {
+  color: var(--primary-color) !important;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 5px;
+}
+
+.container.print-mode .item-badge {
+  background: #6b5b8e !important;
+  color: white !important;
 }
 
 .container.print-mode .tabs-navigation,

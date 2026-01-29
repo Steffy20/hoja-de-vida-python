@@ -47,7 +47,7 @@ function App() {
       // Wait for the state to update and DOM to render all sections
       setTimeout(() => {
         generatePDF('completo');
-      }, 800);
+      }, 1500);
     } else {
       // Download current view immediately
       generatePDF(sectionId);
