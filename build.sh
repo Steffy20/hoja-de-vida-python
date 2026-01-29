@@ -12,6 +12,8 @@ echo "⚛️ Construyendo frontend React..."
 cd frontend
 npm install
 npm run build
+echo "📂 Contenido de frontend/dist:"
+ls -la dist
 cd ..
 
 # Collectstatic
