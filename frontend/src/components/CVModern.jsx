@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa';
 
 
-const CVModern = ({ cvData, onDownloadPDF, isPrinting }) => {
+const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
     const { datos_personales, formacion, experiencia, referencias } = cvData;
     const [activeSection, setActiveSection] = useState('inicio');
 
@@ -92,7 +92,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting }) => {
             {/* Content Area */}
             <div className="tab-content">
                 {/* Inicio - Datos Personales */}
-                {(activeSection === 'inicio' || isPrinting) && (
+                {(activeSection === 'inicio' || (isPrinting && printMode === 'full')) && (
                     <div id="section-inicio" className="fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Información Personal</h2>
@@ -146,7 +146,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting }) => {
                 )}
 
                 {/* Formación Académica */}
-                {(activeSection === 'formacion' || isPrinting) && (
+                {(activeSection === 'formacion' || (isPrinting && printMode === 'full')) && (
                     <div id="section-formacion" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Formación Académica</h2>
@@ -171,7 +171,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting }) => {
                 )}
 
                 {/* Experiencia Laboral */}
-                {(activeSection === 'experiencia' || isPrinting) && (
+                {(activeSection === 'experiencia' || (isPrinting && printMode === 'full')) && (
                     <div id="section-experiencia" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Experiencia Laboral</h2>
@@ -200,7 +200,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting }) => {
                 )}
 
                 {/* Referencias */}
-                {(activeSection === 'referencias' || isPrinting) && (
+                {(activeSection === 'referencias' || (isPrinting && printMode === 'full')) && (
                     <div id="section-referencias" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Referencias Personales</h2>

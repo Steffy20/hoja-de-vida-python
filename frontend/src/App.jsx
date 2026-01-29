@@ -9,9 +9,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPrinting, setIsPrinting] = useState(false);
+  const [printMode, setPrintMode] = useState(null); // 'full' o 'section'
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/cv/')
+    axios.get('/api/cv/')
       .then(response => {
         setCvData(response.data);
         setLoading(false);
@@ -33,25 +34,24 @@ function App() {
         margin: 0,
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        html2canvas: { scale: 2, useCORS: true, logging: true, letterRendering: true },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
 
       html2pdf().set(opt).from(element).save(filename).then(() => {
-        if (mode === 'full') setIsPrinting(false);
+        setIsPrinting(false);
       });
     };
 
-    if (mode === 'full') {
-      setIsPrinting(true);
-      // Wait for the state to update and DOM to render all sections
-      setTimeout(() => {
-        generatePDF('completo');
-      }, 1500);
-    } else {
-      // Download current view immediately
-      generatePDF(sectionId);
-    }
+    setIsPrinting(true);
+    setPrintMode(mode);
+
+    // Wait for the state to update and DOM to render correctly
+    const delay = mode === 'full' ? 1500 : 500;
+    setTimeout(() => {
+      generatePDF(mode === 'full' ? 'completo' : sectionId);
+      setPrintMode(null);
+    }, delay);
   };
 
   if (loading) return <div className="loading">Cargando...</div>;
@@ -63,6 +63,7 @@ function App() {
       cvData={cvData}
       onDownloadPDF={handleDownloadPDF}
       isPrinting={isPrinting}
+      printMode={printMode}
     />
   );
 }
