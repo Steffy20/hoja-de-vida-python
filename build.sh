@@ -15,6 +15,12 @@ npm install
 npm run build
 echo "📂 Contenido de frontend/dist:"
 ls -la dist
+if [ -f "dist/index.html" ]; then
+    echo "✅ index.html encontrado en frontend/dist"
+else
+    echo "❌ ERROR: index.html NO encontrado en frontend/dist"
+    exit 1
+fi
 cd ..
 
 # Collectstatic
