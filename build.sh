@@ -10,6 +10,7 @@ pip install -r requirements.txt
 # Construir frontend React
 echo "⚛️ Construyendo frontend React..."
 cd frontend
+node -v
 npm install
 npm run build
 echo "📂 Contenido de frontend/dist:"
