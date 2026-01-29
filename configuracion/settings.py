@@ -52,10 +52,22 @@ else:
 
 ROOT_URLCONF = 'configuracion.urls'
 
+# Debugging paths on Render
+TEMPLATES_DIR = BASE_DIR / 'templates'
+print(f"DEBUG: BASE_DIR is {BASE_DIR}")
+print(f"DEBUG: TEMPLATES_DIR is {TEMPLATES_DIR}")
+if os.path.exists(TEMPLATES_DIR / 'index.html'):
+    print("DEBUG: index.html exists in templates directory")
+else:
+    print("DEBUG: index.html DOES NOT exist in templates directory")
+    # Fallback check
+    if os.path.exists(BASE_DIR / 'frontend' / 'dist' / 'index.html'):
+        print("DEBUG: index.html found in fallback frontend/dist")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'dist')],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

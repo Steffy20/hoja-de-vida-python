@@ -17,11 +17,15 @@ echo "📂 Contenido de frontend/dist:"
 ls -la dist
 if [ -f "dist/index.html" ]; then
     echo "✅ index.html encontrado en frontend/dist"
+    # Copiar a una carpeta de templates en la raíz para Django
+    cd ..
+    mkdir -p templates
+    cp frontend/dist/index.html templates/index.html
+    echo "📋 index.html copiado a la carpeta templates/ en la raíz"
 else
     echo "❌ ERROR: index.html NO encontrado en frontend/dist"
     exit 1
 fi
-cd ..
 
 # Collectstatic
 echo "📂 Recolectando archivos estáticos..."
