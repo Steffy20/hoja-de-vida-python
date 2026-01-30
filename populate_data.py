@@ -99,20 +99,21 @@ def poblar_datos():
     Curso.objects.create(
         nombre="Curso de fundamentos de programación",
         institucion="Manta Capacita",
-        certificado="certificados/Estefania-Lopez-Solorzano-Fundamentos-de-Programacion--Septiembre-2021-Fundamentos-de-Programacion-Manta-Capacita.pdf"
+        certificado="/static/certificados/Estefania-Lopez-Solorzano-Fundamentos-de-Programacion--Septiembre-2021-Fundamentos-de-Programacion-Manta-Capacita.pdf"
     )
     Curso.objects.create(
         nombre="Curso de introducción a la seguridad cibernética",
         institucion="Cisco",
-        certificado="certificados/Carmen EstefaníaLópez Solórzano-LearnAThon_ESPOL-certificate.pdf"
+        certificado="/static/certificados/Carmen EstefaníaLópez Solórzano-LearnAThon_ESPOL-certificate.pdf"
     )
     Curso.objects.create(
         nombre="Programación profesional desde cero con c++",
         institucion="Udemy",
-        certificado="certificados/Curso Udemy.pdf"
+        certificado="/static/certificados/Curso Udemy.pdf"
     )
 
     print("Población de datos completada.")
 
 if __name__ == '__main__':
     poblar_datos()
+

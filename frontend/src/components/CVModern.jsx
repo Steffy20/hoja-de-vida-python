@@ -217,16 +217,22 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                         </div>
 
                         <div className="courses-grid">
-                            {cursos && cursos.map((curso, index) => (
+                            {cursos && cursos.map((curso, index) => {
+                                const certificadoUrl = curso.certificado
+                                    ? (curso.certificado.startsWith('http') || curso.certificado.startsWith('/')
+                                        ? curso.certificado
+                                        : `/static/${curso.certificado}`)
+                                    : null;
+                                return (
                                 <div key={index} className="course-card">
                                     <div className="course-info">
                                         <div className="course-name">{curso.nombre}</div>
                                         <div className="course-institution">{curso.institucion}</div>
                                         {curso.fecha && <div className="course-date">{formatDate(curso.fecha)}</div>}
                                     </div>
-                                    {curso.certificado && (
+                                    {certificadoUrl && (
                                         <a
-                                            href={curso.certificado}
+                                            href={certificadoUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="certificate-link"
@@ -235,7 +241,8 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                                         </a>
                                     )}
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 )}
