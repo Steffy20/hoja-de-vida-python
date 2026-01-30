@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal
+from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal, Curso
 from datetime import date
 
 class DatosPersonalesSerializer(serializers.ModelSerializer):
@@ -108,3 +108,8 @@ class ReferenciaPersonalSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("El teléfono debe contener al menos 7 dígitos.")
         
         return value
+
+class CursoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Curso
+        fields = '__all__'

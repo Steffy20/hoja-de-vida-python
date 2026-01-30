@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal
+from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal, Curso
 from .serializers import (
-    DatosPersonalesSerializer, 
-    FormacionAcademicaSerializer, 
+    DatosPersonalesSerializer,
+    FormacionAcademicaSerializer,
     ExperienciaLaboralSerializer, 
-    ReferenciaPersonalSerializer
+    ReferenciaPersonalSerializer,
+    CursoSerializer
 )
 
 class IndexView(TemplateView):
@@ -19,10 +20,12 @@ def cv_api(request):
     formacion = FormacionAcademica.objects.all()
     experiencia = ExperienciaLaboral.objects.all()
     referencias = ReferenciaPersonal.objects.all()
+    cursos = Curso.objects.all()
     
     return Response({
         'datos_personales': DatosPersonalesSerializer(datos_personales).data if datos_personales else None,
         'formacion': FormacionAcademicaSerializer(formacion, many=True).data,
         'experiencia': ExperienciaLaboralSerializer(experiencia, many=True).data,
         'referencias': ReferenciaPersonalSerializer(referencias, many=True).data,
+        'cursos': CursoSerializer(cursos, many=True).data,
     })

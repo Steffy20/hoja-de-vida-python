@@ -8,12 +8,14 @@ import {
     FaPrint,
     FaEnvelope,
     FaPhone,
-    FaMapMarkerAlt
+    FaMapMarkerAlt,
+    FaCertificate,
+    FaExternalLinkAlt
 } from 'react-icons/fa';
 
 
 const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
-    const { datos_personales, formacion, experiencia, referencias } = cvData;
+    const { datos_personales, formacion, experiencia, referencias, cursos } = cvData;
     const [activeSection, setActiveSection] = useState('inicio');
 
     // Utility function to format dates
@@ -30,6 +32,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
         { id: 'inicio', label: 'Inicio', icon: <FaHome /> },
         { id: 'formacion', label: 'Formación', icon: <FaGraduationCap /> },
         { id: 'experiencia', label: 'Experiencia', icon: <FaBriefcase /> },
+        { id: 'cursos', label: 'Cursos', icon: <FaCertificate /> },
         { id: 'referencias', label: 'Referencias', icon: <FaUsers /> }
     ];
 
@@ -199,6 +202,44 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                     </div>
                 )}
 
+
+
+                {/* Cursos y Certificaciones */}
+                {(activeSection === 'cursos' || (isPrinting && printMode === 'full')) && (
+                    <div id="section-cursos" className="section-card fade-in">
+                        <div className="print-header">
+                            <h2 className="section-title">Cursos y Certificaciones</h2>
+                            {!isPrinting && (
+                                <button onClick={() => onDownloadPDF('section', 'cursos')} className="print-button">
+                                    <FaPrint /> Guardar como PDF
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="courses-grid">
+                            {cursos && cursos.map((curso, index) => (
+                                <div key={index} className="course-card">
+                                    <div className="course-info">
+                                        <div className="course-name">{curso.nombre}</div>
+                                        <div className="course-institution">{curso.institucion}</div>
+                                        {curso.fecha && <div className="course-date">{formatDate(curso.fecha)}</div>}
+                                    </div>
+                                    {curso.certificado && (
+                                        <a
+                                            href={curso.certificado}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="certificate-link"
+                                        >
+                                            <FaCertificate /> Ver Certificado <FaExternalLinkAlt size={12} />
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 {/* Referencias */}
                 {(activeSection === 'referencias' || (isPrinting && printMode === 'full')) && (
                     <div id="section-referencias" className="section-card fade-in">
@@ -223,7 +264,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 
