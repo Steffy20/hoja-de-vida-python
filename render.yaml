@@ -1,4 +1,5 @@
 services:
+  # Web Service para Django + React
   - type: web
     name: hoja-de-vida-carmen
     env: python
@@ -6,7 +7,7 @@ services:
     plan: free
     branch: main
     buildCommand: "./build.sh"
-    startCommand: "bash start.sh"
+    startCommand: "gunicorn app:app"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -18,20 +19,13 @@ services:
         value: False
       - key: ALLOWED_HOSTS
         sync: false
-      - key: DJANGO_SUPERUSER_USERNAME
-        sync: false
-      - key: DJANGO_SUPERUSER_EMAIL
-        sync: false
-      - key: DJANGO_SUPERUSER_PASSWORD
-        sync: false
-      - key: SEED_DATA
-        value: True
       - key: DATABASE_URL
         fromDatabase:
           name: hoja-de-vida-db
           property: connectionString
 
 databases:
+  # PostgreSQL Database
   - name: hoja-de-vida-db
     plan: free
     databaseName: hoja_de_vida_db

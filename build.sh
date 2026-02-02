@@ -1,31 +1,42 @@
 #!/usr/bin/env bash
 set -o errexit
 
-echo "Starting Render build..."
+echo "🚀 Iniciando build para Render..."
 
-echo "Installing Python dependencies..."
+# Instalar dependencias Python
+echo "📦 Instalando dependencias Python..."
 pip install -r requirements.txt
 
-echo "Building React frontend..."
+# Construir frontend React
+echo "⚛️ Construyendo frontend React..."
 cd frontend
 node -v
 npm install
 npm run build
-
-echo "frontend/dist contents:"
+echo "📂 Contenido de frontend/dist:"
 ls -la dist
 if [ -f "dist/index.html" ]; then
-    echo "index.html found in frontend/dist"
+    echo "✅ index.html encontrado en frontend/dist"
+    # Copiar a una carpeta de templates en la raíz para Django
     cd ..
     mkdir -p templates
     cp frontend/dist/index.html templates/index.html
-    echo "index.html copied to templates/"
+    echo "📋 index.html copiado a la carpeta templates/ en la raíz"
 else
-    echo "ERROR: index.html not found in frontend/dist"
+    echo "❌ ERROR: index.html NO encontrado en frontend/dist"
     exit 1
 fi
 
-echo "Collecting static files..."
+# Collectstatic
+echo "📂 Recolectando archivos estáticos..."
 python manage.py collectstatic --noinput
 
-echo "Build completed."
+# Migraciones
+echo "🗃️ Ejecutando migraciones..."
+python manage.py migrate
+
+# Poblar base de datos con datos de Carmen
+echo "👤 Poblando base de datos con CV de Carmen López Solórzano..."
+python populate_data.py
+
+echo "✅ Build completado exitosamente!"
