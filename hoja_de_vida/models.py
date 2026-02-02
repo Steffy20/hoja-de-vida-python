@@ -1,9 +1,7 @@
 from django.db import models
-<<<<<<< HEAD
-=======
 from django.core.exceptions import ValidationError
 from django.utils import timezone
->>>>>>> d07955a532472cc349855f08a265beab260c6dd7
+
 
 class DatosPersonales(models.Model):
     nombres = models.CharField(max_length=100)
@@ -16,19 +14,17 @@ class DatosPersonales(models.Model):
     telefono = models.CharField(max_length=20)
     email = models.EmailField()
 
-<<<<<<< HEAD
-=======
     def clean(self):
         today = timezone.now().date()
         if self.fecha_nacimiento and self.fecha_nacimiento >= today:
             raise ValidationError({'fecha_nacimiento': 'La fecha de nacimiento debe ser anterior a la fecha actual.'})
         if self.edad is not None:
             if self.edad < 0 or self.edad > 120:
-                raise ValidationError({'edad': 'La edad no es válida.'})
+                raise ValidationError({'edad': 'La edad no es valida.'})
 
->>>>>>> d07955a532472cc349855f08a265beab260c6dd7
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
+
 
 class FormacionAcademica(models.Model):
     nivel = models.CharField(max_length=100)
@@ -39,15 +35,14 @@ class FormacionAcademica(models.Model):
     def __str__(self):
         return f"{self.titulo} - {self.institucion}"
 
+
 class ExperienciaLaboral(models.Model):
     empresa = models.CharField(max_length=200)
     cargo = models.CharField(max_length=200)
     descripcion = models.TextField(blank=True, null=True)
     fecha_inicio = models.DateField(blank=True, null=True)
     fecha_fin = models.DateField(blank=True, null=True)
-<<<<<<< HEAD
-=======
-    # URL o ruta estática (p.ej. /static/certificados/archivo.pdf)
+    # URL o ruta estatica (p.ej. /static/certificados/archivo.pdf)
     certificado = models.CharField(max_length=500, blank=True, null=True)
 
     def clean(self):
@@ -55,13 +50,13 @@ class ExperienciaLaboral(models.Model):
         if self.fecha_inicio and self.fecha_inicio > today:
             raise ValidationError({'fecha_inicio': 'La fecha de inicio no puede ser futura.'})
         if self.fecha_fin and self.fecha_fin > today:
-            raise ValidationError({'fecha_fin': 'La fecha de finalización no puede ser futura.'})
+            raise ValidationError({'fecha_fin': 'La fecha de finalizacion no puede ser futura.'})
         if self.fecha_inicio and self.fecha_fin and self.fecha_fin < self.fecha_inicio:
-            raise ValidationError({'fecha_fin': 'La fecha de finalización debe ser posterior a la fecha de inicio.'})
->>>>>>> d07955a532472cc349855f08a265beab260c6dd7
+            raise ValidationError({'fecha_fin': 'La fecha de finalizacion debe ser posterior a la fecha de inicio.'})
 
     def __str__(self):
         return f"{self.cargo} en {self.empresa}"
+
 
 class ReferenciaPersonal(models.Model):
     nombre = models.CharField(max_length=100)
@@ -71,17 +66,17 @@ class ReferenciaPersonal(models.Model):
     def __str__(self):
         return self.nombre
 
+
 class Curso(models.Model):
     nombre = models.CharField(max_length=200)
     institucion = models.CharField(max_length=200)
     fecha = models.DateField(blank=True, null=True)
-    # URL o ruta estática (p.ej. /static/certificados/archivo.pdf)
+    # URL o ruta estatica (p.ej. /static/certificados/archivo.pdf)
     certificado = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f"{self.nombre} - {self.institucion}"
-<<<<<<< HEAD
-=======
+
 
 class CVSectionConfig(models.Model):
     show_inicio = models.BooleanField(default=True)
@@ -95,5 +90,4 @@ class CVSectionConfig(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return "Configuración de secciones del CV"
->>>>>>> d07955a532472cc349855f08a265beab260c6dd7
+        return "Configuracion de secciones del CV"
