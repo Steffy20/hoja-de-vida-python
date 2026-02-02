@@ -4,7 +4,11 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'configuracion.settings')
 django.setup()
 
-from hoja_de_vida.models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal, Curso
+from hoja_de_vida.models import (
+    DatosPersonales, FormacionAcademica, ExperienciaLaboral, 
+    ReferenciaPersonal, Curso, Reconocimiento, ProductoAcademico, 
+    ProductoLaboral, VentaGarage
+)
 
 def poblar_datos():
     # Datos Personales
@@ -110,6 +114,74 @@ def poblar_datos():
         nombre="Programación profesional desde cero con c++",
         institucion="Udemy",
         certificado="/static/certificados/Curso Udemy.pdf"
+    )
+
+    # Reconocimientos
+    print("Poblando Reconocimientos...")
+    Reconocimiento.objects.all().delete()
+    Reconocimiento.objects.create(
+        tipo_reconocimiento="Académico",
+        descripcion="Mejor promedio del semestre",
+        entidad_patrocinadora="Universidad Laica Eloy Alfaro de Manabí",
+        fecha_reconocimiento="2023-07-15",
+        activo=True
+    )
+    Reconocimiento.objects.create(
+        tipo_reconocimiento="Público",
+        descripcion="Participación en hackathon universitario",
+        entidad_patrocinadora="ESPOL",
+        fecha_reconocimiento="2022-11-20",
+        activo=True
+    )
+
+    # Productos Académicos
+    print("Poblando Productos Académicos...")
+    ProductoAcademico.objects.all().delete()
+    ProductoAcademico.objects.create(
+        nombre_recurso="Proyecto de Investigación: Aplicaciones Web con Django",
+        clasificador="Investigación",
+        descripcion="Desarrollo de aplicaciones web usando Python y Django",
+        activo=True
+    )
+    ProductoAcademico.objects.create(
+        nombre_recurso="Artículo: Seguridad Cibernética en Redes",
+        clasificador="Publicación",
+        descripcion="Análisis de vulnerabilidades en redes corporativas",
+        activo=True
+    )
+
+    # Productos Laborales
+    print("Poblando Productos Laborales...")
+    ProductoLaboral.objects.all().delete()
+    ProductoLaboral.objects.create(
+        nombre_producto="Sistema de Gestión de Clientes",
+        fecha_producto="2023-05-10",
+        descripcion="Desarrollo de sistema CRM para pequeñas empresas",
+        activo=True
+    )
+    ProductoLaboral.objects.create(
+        nombre_producto="Diseño de Campaña Publicitaria",
+        fecha_producto="2023-02-15",
+        descripcion="Diseño completo de campaña para redes sociales",
+        activo=True
+    )
+
+    # Venta Garage
+    print("Poblando Venta Garage...")
+    VentaGarage.objects.all().delete()
+    VentaGarage.objects.create(
+        nombre_producto="Laptop HP Pavilion",
+        estado_producto="Bueno",
+        descripcion="Laptop en excelente estado, 8GB RAM, 256GB SSD",
+        valor_del_bien=350.00,
+        activo=True
+    )
+    VentaGarage.objects.create(
+        nombre_producto="Monitor Samsung 24 pulgadas",
+        estado_producto="Regular",
+        descripcion="Monitor funcional con pequeño rayón en esquina",
+        valor_del_bien=80.00,
+        activo=True
     )
 
     print("Población de datos completada.")
