@@ -35,6 +35,10 @@ python manage.py collectstatic --noinput
 echo "🗃️ Ejecutando migraciones..."
 python manage.py migrate
 
+# Reparar mojibake (acentos da?ados)
+echo "Reparando textos con encoding incorrecto..."
+python manage.py fix_mojibake
+
 # Crear/asegurar superusuario (si hay variables de entorno)
 echo "Asegurando superusuario..."
 python manage.py ensure_superuser
