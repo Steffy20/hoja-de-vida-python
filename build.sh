@@ -35,6 +35,10 @@ python manage.py collectstatic --noinput
 echo "🗃️ Ejecutando migraciones..."
 python manage.py migrate
 
+# Crear/asegurar superusuario (si hay variables de entorno)
+echo "Asegurando superusuario..."
+python manage.py ensure_superuser
+
 # Poblar base de datos con datos de Carmen
 echo "👤 Poblando base de datos con CV de Carmen López Solórzano..."
 python populate_data.py

@@ -10,11 +10,28 @@ function App() {
   const [error, setError] = useState(null);
   const [isPrinting, setIsPrinting] = useState(false);
   const [printMode, setPrintMode] = useState(null); // 'full' o 'section'
+  const defaultPdfSections = {
+    inicio: true,
+    formacion: true,
+    experiencia: true,
+    cursos: true,
+    referencias: true
+  };
+  const [pdfSections, setPdfSections] = useState(defaultPdfSections);
 
   useEffect(() => {
     axios.get('/api/cv/')
       .then(response => {
-        setCvData(response.data);
+        const data = response.data;
+        const visibility = data.section_visibility || {};
+        const initialPdfSections = { ...defaultPdfSections };
+        Object.keys(initialPdfSections).forEach((key) => {
+          if (visibility[key] === false) {
+            initialPdfSections[key] = false;
+          }
+        });
+        setPdfSections(initialPdfSections);
+        setCvData(data);
         setLoading(false);
       })
       .catch(err => {
@@ -25,9 +42,20 @@ function App() {
   }, []);
 
   const handleDownloadPDF = (mode, sectionId) => {
+    if (mode === 'full') {
+      const hasSelection = Object.values(pdfSections).some(Boolean);
+      if (!hasSelection) {
+        alert('Selecciona al menos una sección para el PDF.');
+        return;
+      }
+    }
+
     const generatePDF = (filenameSuffix) => {
       const element = document.querySelector('.container');
-      const sanitizedName = `CV_${cvData.datos_personales.nombres}_${cvData.datos_personales.apellidos}`.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      const fullName = cvData?.datos_personales
+        ? `${cvData.datos_personales.nombres}_${cvData.datos_personales.apellidos}`
+        : 'cv';
+      const sanitizedName = `CV_${fullName}`.replace(/[^a-z0-9]/gi, '_').toLowerCase();
       const filename = `${sanitizedName}_${filenameSuffix}.pdf`;
 
       const opt = {
@@ -64,6 +92,8 @@ function App() {
       onDownloadPDF={handleDownloadPDF}
       isPrinting={isPrinting}
       printMode={printMode}
+      pdfSections={pdfSections}
+      setPdfSections={setPdfSections}
     />
   );
 }

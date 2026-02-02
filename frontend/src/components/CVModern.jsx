@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import perfilCarmen from '../assets/perfil-carmen.png';
 import {
     FaHome,
@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fa';
 
 
-const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
+const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, setPdfSections }) => {
     const { datos_personales, formacion, experiencia, referencias, cursos } = cvData;
     const [activeSection, setActiveSection] = useState('inicio');
 
@@ -28,6 +28,26 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
         return `${day}/${month}/${year}`;
     };
 
+    const sectionVisibility = cvData.section_visibility || {};
+    const isSectionVisible = (id) => sectionVisibility[id] !== false;
+    const isPdfSectionEnabled = (id) => {
+        if (!pdfSections) return true;
+        return pdfSections[id] !== false;
+    };
+    const togglePdfSection = (id) => {
+        if (!setPdfSections) return;
+        setPdfSections((prev) => ({
+            ...prev,
+            [id]: !(prev?.[id] ?? true)
+        }));
+    };
+    const resolveCertUrl = (value) => {
+        if (!value) return null;
+        if (value.startsWith('http') || value.startsWith('/')) return value;
+        return `/static/${value}`;
+    };
+    const isImageUrl = (url) => /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(url);
+
     const sections = [
         { id: 'inicio', label: 'Inicio', icon: <FaHome /> },
         { id: 'formacion', label: 'Formación', icon: <FaGraduationCap /> },
@@ -35,6 +55,22 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
         { id: 'cursos', label: 'Cursos', icon: <FaCertificate /> },
         { id: 'referencias', label: 'Referencias', icon: <FaUsers /> }
     ];
+    const visibleSections = sections.filter((section) => isSectionVisible(section.id));
+    const hasPdfSelection = visibleSections.some((section) => isPdfSectionEnabled(section.id));
+
+    useEffect(() => {
+        if (!visibleSections.find((section) => section.id === activeSection)) {
+            setActiveSection(visibleSections[0]?.id || 'inicio');
+        }
+    }, [activeSection, visibleSections]);
+
+    const shouldRenderSection = (id) => {
+        if (!isSectionVisible(id)) return false;
+        if (isPrinting && printMode === 'full') {
+            return isPdfSectionEnabled(id);
+        }
+        return activeSection === id;
+    };
 
     return (
         <div className={`container ${isPrinting ? 'print-mode' : ''}`}>
@@ -68,12 +104,32 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                             <span>{datos_personales.direccion}</span>
                         </div>
                     </div>
+
+                    {!isPrinting && visibleSections.length > 0 && (
+                        <div className="pdf-section-toggle">
+                            <div className="pdf-toggle-title">
+                                <FaPrint /> PDF: incluir secciones
+                            </div>
+                            <div className="pdf-toggle-grid">
+                                {visibleSections.map((section) => (
+                                    <label key={section.id} className="pdf-toggle-item">
+                                        <input
+                                            type="checkbox"
+                                            checked={isPdfSectionEnabled(section.id)}
+                                            onChange={() => togglePdfSection(section.id)}
+                                        />
+                                        <span>{section.label}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* Navigation Tabs */}
             <div className="tabs-navigation">
-                {sections.map((section) => (
+                {visibleSections.map((section) => (
                     <button
                         key={section.id}
                         className={`tab-button ${activeSection === section.id ? 'active' : ''}`}
@@ -86,6 +142,8 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                 <button
                     className="tab-button download-full"
                     onClick={() => onDownloadPDF('full')}
+                    disabled={!hasPdfSelection}
+                    title={hasPdfSelection ? 'Descargar CV completo' : 'Selecciona al menos una sección para el PDF'}
                 >
                     <span className="tab-icon"><FaPrint /></span>
                     <span className="tab-label">CV Completo</span>
@@ -95,7 +153,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
             {/* Content Area */}
             <div className="tab-content">
                 {/* Inicio - Datos Personales */}
-                {(activeSection === 'inicio' || (isPrinting && printMode === 'full')) && (
+                {shouldRenderSection('inicio') && (
                     <div id="section-inicio" className="fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Información Personal</h2>
@@ -125,7 +183,6 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                         </div>
 
                         <div className="section-card">
-                            <h2 className="section-title">Información Personal</h2>
                             <div className="personal-info-grid">
                                 <div className="personal-info-item">
                                     <strong>Nombre Completo:</strong>
@@ -149,7 +206,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                 )}
 
                 {/* Formación Académica */}
-                {(activeSection === 'formacion' || (isPrinting && printMode === 'full')) && (
+                {shouldRenderSection('formacion') && (
                     <div id="section-formacion" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Formación Académica</h2>
@@ -174,7 +231,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                 )}
 
                 {/* Experiencia Laboral */}
-                {(activeSection === 'experiencia' || (isPrinting && printMode === 'full')) && (
+                {shouldRenderSection('experiencia') && (
                     <div id="section-experiencia" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Experiencia Laboral</h2>
@@ -185,27 +242,52 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                             )}
                         </div>
 
-                        {experiencia.map((item, index) => (
-                            <div key={index} className="timeline-item">
-                                <div className="item-header">
-                                    <div className="item-title">{item.cargo}</div>
-                                </div>
-                                <div className="item-subtitle">{item.empresa}</div>
-                                {(item.fecha_inicio || item.fecha_fin) && (
-                                    <div className="item-date">
-                                        {formatDate(item.fecha_inicio)} - {formatDate(item.fecha_fin)}
+                        {experiencia.map((item, index) => {
+                            const certificadoUrl = resolveCertUrl(item.certificado);
+                            const isImage = certificadoUrl && isImageUrl(certificadoUrl);
+                            return (
+                                <div key={index} className="timeline-item">
+                                    <div className="item-header">
+                                        <div className="item-title">{item.cargo}</div>
                                     </div>
-                                )}
-                                <div className="item-description">{item.descripcion}</div>
-                            </div>
-                        ))}
+                                    <div className="item-subtitle">{item.empresa}</div>
+                                    {(item.fecha_inicio || item.fecha_fin) && (
+                                        <div className="item-date">
+                                            {formatDate(item.fecha_inicio)} - {formatDate(item.fecha_fin)}
+                                        </div>
+                                    )}
+                                    <div className="item-description">{item.descripcion}</div>
+                                    {certificadoUrl && (
+                                        <div className="experience-cert">
+                                            {isImage ? (
+                                                <a
+                                                    href={certificadoUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="certificate-thumb"
+                                                >
+                                                    <img src={certificadoUrl} alt="Certificado de experiencia" />
+                                                </a>
+                                            ) : (
+                                                <a
+                                                    href={certificadoUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="certificate-link"
+                                                >
+                                                    <FaCertificate /> Ver Certificado <FaExternalLinkAlt size={12} />
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
 
-
-
                 {/* Cursos y Certificaciones */}
-                {(activeSection === 'cursos' || (isPrinting && printMode === 'full')) && (
+                {shouldRenderSection('cursos') && (
                     <div id="section-cursos" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Cursos y Certificaciones</h2>
@@ -218,29 +300,25 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
 
                         <div className="courses-grid">
                             {cursos && cursos.map((curso, index) => {
-                                const certificadoUrl = curso.certificado
-                                    ? (curso.certificado.startsWith('http') || curso.certificado.startsWith('/')
-                                        ? curso.certificado
-                                        : `/static/${curso.certificado}`)
-                                    : null;
+                                const certificadoUrl = resolveCertUrl(curso.certificado);
                                 return (
-                                <div key={index} className="course-card">
-                                    <div className="course-info">
-                                        <div className="course-name">{curso.nombre}</div>
-                                        <div className="course-institution">{curso.institucion}</div>
-                                        {curso.fecha && <div className="course-date">{formatDate(curso.fecha)}</div>}
+                                    <div key={index} className="course-card">
+                                        <div className="course-info">
+                                            <div className="course-name">{curso.nombre}</div>
+                                            <div className="course-institution">{curso.institucion}</div>
+                                            {curso.fecha && <div className="course-date">{formatDate(curso.fecha)}</div>}
+                                        </div>
+                                        {certificadoUrl && (
+                                            <a
+                                                href={certificadoUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="certificate-link"
+                                            >
+                                                <FaCertificate /> Ver Certificado <FaExternalLinkAlt size={12} />
+                                            </a>
+                                        )}
                                     </div>
-                                    {certificadoUrl && (
-                                        <a
-                                            href={certificadoUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="certificate-link"
-                                        >
-                                            <FaCertificate /> Ver Certificado <FaExternalLinkAlt size={12} />
-                                        </a>
-                                    )}
-                                </div>
                                 );
                             })}
                         </div>
@@ -248,7 +326,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode }) => {
                 )}
 
                 {/* Referencias */}
-                {(activeSection === 'referencias' || (isPrinting && printMode === 'full')) && (
+                {shouldRenderSection('referencias') && (
                     <div id="section-referencias" className="section-card fade-in">
                         <div className="print-header">
                             <h2 className="section-title">Referencias Personales</h2>
