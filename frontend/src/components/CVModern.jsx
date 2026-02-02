@@ -49,7 +49,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
 
     const sections = [
         { id: 'inicio', label: 'Inicio', icon: <FaHome /> },
-        { id: 'formacion', label: 'Formaci?n', icon: <FaGraduationCap /> },
+        { id: 'formacion', label: 'Formaci\u00f3n', icon: <FaGraduationCap /> },
         { id: 'experiencia', label: 'Experiencia', icon: <FaBriefcase /> },
         { id: 'cursos', label: 'Cursos', icon: <FaCertificate /> },
         { id: 'referencias', label: 'Referencias', icon: <FaUsers /> }
@@ -77,7 +77,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                 <div className="header-content">
                     <div className="profile-section">
                         <div className="profile-photo-wrapper">
-                            <img src={perfilCarmen} alt="Carmen L?pez" className="profile-photo" />
+                            <img src={perfilCarmen} alt="Carmen L\u00f3pez" className="profile-photo" />
                         </div>
                         <div className="profile-info">
                             <h1>{datos_personales.nombres} {datos_personales.apellidos}</h1>
@@ -93,12 +93,12 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                         </div>
                         <div className="contact-item-header">
                             <FaPhone className="contact-icon" />
-                            <strong>Tel?fono:</strong>
+                            <strong>Tel&eacute;fono:</strong>
                             <span>{datos_personales.telefono}</span>
                         </div>
                         <div className="contact-item-header">
                             <FaMapMarkerAlt className="contact-icon" />
-                            <strong>Direcci?n:</strong>
+                            <strong>Direcci&oacute;n:</strong>
                             <span>{datos_personales.direccion}</span>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                     className="tab-button download-full"
                     onClick={() => onDownloadPDF('full')}
                     disabled={!hasPdfSelection}
-                    title={hasPdfSelection ? 'Descargar CV completo' : 'Selecciona al menos una secci?n para el PDF'}
+                    title={hasPdfSelection ? 'Descargar CV completo' : 'Selecciona al menos una secci\u00f3n para el PDF'}
                 >
                     <span className="tab-icon"><FaPrint /></span>
                     <span className="tab-label">CV Completo</span>
@@ -151,7 +151,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                 {shouldRenderSection('inicio') && (
                     <div id="section-inicio" className="fade-in">
                         <div className="print-header">
-                            <h2 className="section-title">Informaci?n Personal</h2>
+                            <h2 className="section-title">Informaci&oacute;n Personal</h2>
                             {!isPrinting && (
                                 <button onClick={() => onDownloadPDF('section', 'inicio')} className="print-button">
                                     <FaPrint /> Guardar como PDF
@@ -160,7 +160,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                         </div>
                         <div className="info-cards">
                             <div className="info-card">
-                                <div className="info-card-label">C?dula</div>
+                                <div className="info-card-label">C&eacute;dula</div>
                                 <div className="info-card-value">{datos_personales.cedula}</div>
                             </div>
                             <div className="info-card">
@@ -173,7 +173,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                             </div>
                             <div className="info-card">
                                 <div className="info-card-label">Edad</div>
-                                <div className="info-card-value">{datos_personales.edad} a?os</div>
+                                <div className="info-card-value">{datos_personales.edad} a&ntilde;os</div>
                             </div>
                         </div>
 
@@ -184,15 +184,15 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                                     <span>{datos_personales.nombres} {datos_personales.apellidos}</span>
                                 </div>
                                 <div className="personal-info-item">
-                                    <strong>Correo Electr?nico:</strong>
+                                    <strong>Correo Electr&oacute;nico:</strong>
                                     <span>{datos_personales.email}</span>
                                 </div>
                                 <div className="personal-info-item">
-                                    <strong>Tel?fono:</strong>
+                                    <strong>Tel&eacute;fono:</strong>
                                     <span>{datos_personales.telefono}</span>
                                 </div>
                                 <div className="personal-info-item">
-                                    <strong>Direcci?n:</strong>
+                                    <strong>Direcci&oacute;n:</strong>
                                     <span>{datos_personales.direccion}</span>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@ const CVModern = ({ cvData, onDownloadPDF, isPrinting, printMode, pdfSections, s
                 {shouldRenderSection('formacion') && (
                     <div id="section-formacion" className="section-card fade-in">
                         <div className="print-header">
-                            <h2 className="section-title">Formaci?n Acad?mica</h2>
+                            <h2 className="section-title">Formaci&oacute;n Acad&eacute;mica</h2>
                             {!isPrinting && (
                                 <button onClick={() => onDownloadPDF('section', 'formacion')} className="print-button">
                                     <FaPrint /> Guardar como PDF
