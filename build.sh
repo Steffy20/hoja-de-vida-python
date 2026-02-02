@@ -35,6 +35,17 @@ python manage.py collectstatic --noinput
 echo "🗃️ Ejecutando migraciones..."
 python manage.py migrate
 
+<<<<<<< HEAD
+=======
+# Reparar mojibake (acentos da?ados)
+echo "Reparando textos con encoding incorrecto..."
+python manage.py fix_mojibake
+
+# Crear/asegurar superusuario (si hay variables de entorno)
+echo "Asegurando superusuario..."
+python manage.py ensure_superuser
+
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 # Poblar base de datos con datos de Carmen
 echo "👤 Poblando base de datos con CV de Carmen López Solórzano..."
 python populate_data.py

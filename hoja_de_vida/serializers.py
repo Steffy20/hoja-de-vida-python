@@ -1,5 +1,9 @@
 from rest_framework import serializers
+<<<<<<< HEAD
 from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal, Curso
+=======
+from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal, Curso, CVSectionConfig
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 from datetime import date
 
 class DatosPersonalesSerializer(serializers.ModelSerializer):
@@ -60,6 +64,7 @@ class ExperienciaLaboralSerializer(serializers.ModelSerializer):
         fecha_inicio = data.get('fecha_inicio')
         fecha_fin = data.get('fecha_fin')
         
+<<<<<<< HEAD
         if fecha_inicio and fecha_fin:
             if fecha_fin < fecha_inicio:
                 raise serializers.ValidationError({
@@ -74,6 +79,25 @@ class ExperienciaLaboralSerializer(serializers.ModelSerializer):
         
         return data
     
+=======
+        if fecha_inicio and fecha_fin and fecha_fin < fecha_inicio:
+            raise serializers.ValidationError({
+                'fecha_fin': 'La fecha de finalizacion debe ser posterior a la fecha de inicio.'
+            })
+        
+        # Validate that dates are not in the future
+        if fecha_inicio and fecha_inicio > date.today():
+            raise serializers.ValidationError({
+                'fecha_inicio': 'La fecha de inicio no puede ser futura.'
+            })
+        if fecha_fin and fecha_fin > date.today():
+            raise serializers.ValidationError({
+                'fecha_fin': 'La fecha de finalizacion no puede ser futura.'
+            })
+        
+        return data
+
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
     def validate_cargo(self, value):
         """Validate that position title is provided"""
         if not value or not value.strip():
@@ -113,3 +137,11 @@ class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
         fields = '__all__'
+<<<<<<< HEAD
+=======
+
+class CVSectionConfigSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CVSectionConfig
+        fields = '__all__'
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7

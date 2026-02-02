@@ -28,6 +28,7 @@ body {
   align-items: flex-start;
 }
 
+<<<<<<< HEAD
 /* ========================================
    OVERLAY DE CARGA PARA GENERACIÓN DE PDF
    ======================================== */
@@ -70,6 +71,8 @@ body {
   to { transform: rotate(360deg); }
 }
 
+=======
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 .container {
   max-width: 900px;
   width: 100%;
@@ -197,6 +200,49 @@ body {
   flex-shrink: 0;
 }
 
+<<<<<<< HEAD
+=======
+/* PDF Section Toggle */
+.pdf-section-toggle {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.pdf-toggle-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: white;
+  opacity: 0.95;
+}
+
+.pdf-toggle-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 12px;
+}
+
+.pdf-toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 6px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.pdf-toggle-item input {
+  accent-color: white;
+}
+
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 
 /* Info Cards */
 .info-cards {
@@ -331,6 +377,27 @@ body {
   margin-top: 8px;
 }
 
+<<<<<<< HEAD
+=======
+.experience-cert {
+  margin-top: 12px;
+}
+
+.certificate-thumb {
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.certificate-thumb img {
+  display: block;
+  max-width: 180px;
+  height: auto;
+}
+
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 /* References Grid */
 .references-grid {
   display: grid;
@@ -404,6 +471,20 @@ body {
   color: var(--text-color);
 }
 
+<<<<<<< HEAD
+=======
+.tab-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.tab-button:disabled:hover {
+  background: var(--light-bg);
+  transform: none;
+}
+
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 .tab-button:hover {
   background: #f0f0f5;
   transform: translateY(-2px);
@@ -688,6 +769,7 @@ body {
 
 /* Print Mode Overrides for html2pdf */
 .container.print-mode {
+<<<<<<< HEAD
   page-break-inside: avoid;
 }  
 
@@ -716,6 +798,15 @@ body {
   page-break-inside: avoid !important;
   break-inside: avoid !important;
   margin-bottom: 20px;
+=======
+  background: #ffffff !important;
+  color: #2c3e50 !important;
+  padding: 20px !important;
+  box-shadow: none !important;
+  border: none !important;
+  width: 800px !important;
+  min-height: auto !important;
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 }
 
 /* Forzar visibilidad absoluta de textos en modo impresión */
@@ -746,7 +837,13 @@ body {
 }
 
 .container.print-mode .tabs-navigation,
+<<<<<<< HEAD
 .container.print-mode .print-button {
+=======
+.container.print-mode .print-button,
+.container.print-mode .pdf-section-toggle,
+.container.print-mode .certificate-thumb {
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
   display: none !important;
 }
 
@@ -873,6 +970,7 @@ body {
   display: none !important; /* Escondemos el botón de descargar en PDF */
 }
 
+<<<<<<< HEAD
 /* ========================================
    ESTILOS PARA DESCARGA POR SECCIÓN INDIVIDUAL
    ======================================== */
@@ -1298,6 +1396,8 @@ body {
   font-size: 0.9rem;
 }
 
+=======
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 /* Print Media Query for PDF Export */
 @media print {
   body {
@@ -1344,4 +1444,8 @@ body {
   .tab-content > div {
     display: block !important;
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7

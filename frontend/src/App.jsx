@@ -9,6 +9,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPrinting, setIsPrinting] = useState(false);
+<<<<<<< HEAD
   const [printingSections, setPrintingSections] = useState([]);
   const [showPrintModal, setShowPrintModal] = useState(false);
   const [selectedSections, setSelectedSections] = useState([]);
@@ -20,11 +21,35 @@ function App() {
     { id: 'cursos', label: 'Cursos y Certificaciones' },
     { id: 'referencias', label: 'Referencias Personales' }
   ];
+=======
+  const [printMode, setPrintMode] = useState(null); // 'full' o 'section'
+  const defaultPdfSections = {
+    inicio: true,
+    formacion: true,
+    experiencia: true,
+    cursos: true,
+    referencias: true
+  };
+  const [pdfSections, setPdfSections] = useState(defaultPdfSections);
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 
   useEffect(() => {
     axios.get('/api/cv/')
       .then(response => {
+<<<<<<< HEAD
         setCvData(response.data);
+=======
+        const data = response.data;
+        const visibility = data.section_visibility || {};
+        const initialPdfSections = { ...defaultPdfSections };
+        Object.keys(initialPdfSections).forEach((key) => {
+          if (visibility[key] === false) {
+            initialPdfSections[key] = false;
+          }
+        });
+        setPdfSections(initialPdfSections);
+        setCvData(data);
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
         setLoading(false);
       })
       .catch(err => {
@@ -34,6 +59,7 @@ function App() {
       });
   }, []);
 
+<<<<<<< HEAD
   const openPrintModal = () => {
     setSelectedSections(availableSections.map(s => s.id));
     setShowPrintModal(true);
@@ -104,10 +130,36 @@ function App() {
         },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+=======
+  const handleDownloadPDF = (mode, sectionId) => {
+    if (mode === 'full') {
+      const hasSelection = Object.values(pdfSections).some(Boolean);
+      if (!hasSelection) {
+        alert('Selecciona al menos una sección para el PDF.');
+        return;
+      }
+    }
+
+    const generatePDF = (filenameSuffix) => {
+      const element = document.querySelector('.container');
+      const fullName = cvData?.datos_personales
+        ? `${cvData.datos_personales.nombres}_${cvData.datos_personales.apellidos}`
+        : 'cv';
+      const sanitizedName = `CV_${fullName}`.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      const filename = `${sanitizedName}_${filenameSuffix}.pdf`;
+
+      const opt = {
+        margin: 0,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: true, letterRendering: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
       };
 
       html2pdf().set(opt).from(element).save(filename).then(() => {
         setIsPrinting(false);
+<<<<<<< HEAD
         setPrintingSections([]);
       }).catch(err => {
         console.error('Error generating PDF:', err);
@@ -115,6 +167,20 @@ function App() {
         setPrintingSections([]);
       });
     }, 1500);
+=======
+      });
+    };
+
+    setIsPrinting(true);
+    setPrintMode(mode);
+
+    // Wait for the state to update and DOM to render correctly
+    const delay = mode === 'full' ? 1500 : 500;
+    setTimeout(() => {
+      generatePDF(mode === 'full' ? 'completo' : sectionId);
+      setPrintMode(null);
+    }, delay);
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
   };
 
   if (loading) return <div className="loading">Cargando...</div>;
@@ -122,6 +188,7 @@ function App() {
   if (!cvData) return <div>No hay datos disponibles.</div>;
 
   return (
+<<<<<<< HEAD
     <>
       <CVModern
         cvData={cvData}
@@ -195,6 +262,16 @@ function App() {
         </div>
       )}
     </>
+=======
+    <CVModern
+      cvData={cvData}
+      onDownloadPDF={handleDownloadPDF}
+      isPrinting={isPrinting}
+      printMode={printMode}
+      pdfSections={pdfSections}
+      setPdfSections={setPdfSections}
+    />
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
   );
 }
 
