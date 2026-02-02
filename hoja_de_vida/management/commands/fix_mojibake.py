@@ -1,5 +1,3 @@
-import re
-
 from django.core.management.base import BaseCommand
 
 from hoja_de_vida.models import (
@@ -9,25 +7,14 @@ from hoja_de_vida.models import (
     ReferenciaPersonal,
     Curso,
 )
-
-
-MOJIBAKE_RE = re.compile(r"[\u00c3\u00c2\uFFFD]")
+from hoja_de_vida.utils.text import fix_mojibake_text
 
 
 def fix_text(value):
     if not value or not isinstance(value, str):
         return value, False
-    if not MOJIBAKE_RE.search(value):
-        return value, False
-    try:
-        fixed = value.encode("latin1").decode("utf-8")
-    except (UnicodeEncodeError, UnicodeDecodeError):
-        return value, False
-    if fixed == value:
-        return value, False
-    if MOJIBAKE_RE.search(fixed):
-        return value, False
-    return fixed, True
+    fixed = fix_mojibake_text(value)
+    return fixed, fixed != value
 
 
 class Command(BaseCommand):

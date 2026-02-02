@@ -1,8 +1,18 @@
 from rest_framework import serializers
 from .models import DatosPersonales, FormacionAcademica, ExperienciaLaboral, ReferenciaPersonal, Curso, CVSectionConfig
+from .utils.text import fix_mojibake_text
 from datetime import date
 
-class DatosPersonalesSerializer(serializers.ModelSerializer):
+
+class MojibakeFixMixin:
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        for key, value in data.items():
+            if isinstance(value, str):
+                data[key] = fix_mojibake_text(value)
+        return data
+
+class DatosPersonalesSerializer(MojibakeFixMixin, serializers.ModelSerializer):
     class Meta:
         model = DatosPersonales
         fields = '__all__'
@@ -33,7 +43,7 @@ class DatosPersonalesSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Debe proporcionar un email válido.")
         return value.lower()
 
-class FormacionAcademicaSerializer(serializers.ModelSerializer):
+class FormacionAcademicaSerializer(MojibakeFixMixin, serializers.ModelSerializer):
     class Meta:
         model = FormacionAcademica
         fields = '__all__'
@@ -50,7 +60,7 @@ class FormacionAcademicaSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("La institución es requerida.")
         return value
 
-class ExperienciaLaboralSerializer(serializers.ModelSerializer):
+class ExperienciaLaboralSerializer(MojibakeFixMixin, serializers.ModelSerializer):
     class Meta:
         model = ExperienciaLaboral
         fields = '__all__'
@@ -89,7 +99,7 @@ class ExperienciaLaboralSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("La empresa es requerida.")
         return value
 
-class ReferenciaPersonalSerializer(serializers.ModelSerializer):
+class ReferenciaPersonalSerializer(MojibakeFixMixin, serializers.ModelSerializer):
     class Meta:
         model = ReferenciaPersonal
         fields = '__all__'
@@ -112,12 +122,12 @@ class ReferenciaPersonalSerializer(serializers.ModelSerializer):
         
         return value
 
-class CursoSerializer(serializers.ModelSerializer):
+class CursoSerializer(MojibakeFixMixin, serializers.ModelSerializer):
     class Meta:
         model = Curso
         fields = '__all__'
 
-class CVSectionConfigSerializer(serializers.ModelSerializer):
+class CVSectionConfigSerializer(MojibakeFixMixin, serializers.ModelSerializer):
     class Meta:
         model = CVSectionConfig
         fields = '__all__'
