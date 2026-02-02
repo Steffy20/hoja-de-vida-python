@@ -16,6 +16,8 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+<<<<<<< HEAD
+=======
 CSRF_TRUSTED_ORIGINS = []
 csrf_trusted_origins_env = os.environ.get('CSRF_TRUSTED_ORIGINS')
 if csrf_trusted_origins_env:
@@ -25,6 +27,7 @@ if csrf_trusted_origins_env:
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
 
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -133,11 +136,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+<<<<<<< HEAD
+=======
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
 
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = '/static/'

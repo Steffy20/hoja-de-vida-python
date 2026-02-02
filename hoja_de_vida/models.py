@@ -1,6 +1,9 @@
 from django.db import models
+<<<<<<< HEAD
+=======
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 
 class DatosPersonales(models.Model):
     nombres = models.CharField(max_length=100)
@@ -13,6 +16,8 @@ class DatosPersonales(models.Model):
     telefono = models.CharField(max_length=20)
     email = models.EmailField()
 
+<<<<<<< HEAD
+=======
     def clean(self):
         today = timezone.now().date()
         if self.fecha_nacimiento and self.fecha_nacimiento >= today:
@@ -21,6 +26,7 @@ class DatosPersonales(models.Model):
             if self.edad < 0 or self.edad > 120:
                 raise ValidationError({'edad': 'La edad no es válida.'})
 
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
 
@@ -39,6 +45,8 @@ class ExperienciaLaboral(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     fecha_inicio = models.DateField(blank=True, null=True)
     fecha_fin = models.DateField(blank=True, null=True)
+<<<<<<< HEAD
+=======
     # URL o ruta estática (p.ej. /static/certificados/archivo.pdf)
     certificado = models.CharField(max_length=500, blank=True, null=True)
 
@@ -50,6 +58,7 @@ class ExperienciaLaboral(models.Model):
             raise ValidationError({'fecha_fin': 'La fecha de finalización no puede ser futura.'})
         if self.fecha_inicio and self.fecha_fin and self.fecha_fin < self.fecha_inicio:
             raise ValidationError({'fecha_fin': 'La fecha de finalización debe ser posterior a la fecha de inicio.'})
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 
     def __str__(self):
         return f"{self.cargo} en {self.empresa}"
@@ -71,6 +80,8 @@ class Curso(models.Model):
 
     def __str__(self):
         return f"{self.nombre} - {self.institucion}"
+<<<<<<< HEAD
+=======
 
 class CVSectionConfig(models.Model):
     show_inicio = models.BooleanField(default=True)
@@ -85,3 +96,4 @@ class CVSectionConfig(models.Model):
 
     def __str__(self):
         return "Configuración de secciones del CV"
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7

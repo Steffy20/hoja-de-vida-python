@@ -28,6 +28,51 @@ body {
   align-items: flex-start;
 }
 
+<<<<<<< HEAD
+/* ========================================
+   OVERLAY DE CARGA PARA GENERACIÓN DE PDF
+   ======================================== */
+
+.pdf-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.pdf-loading-content {
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.pdf-loading-content p {
+  margin-top: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.pdf-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+=======
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 .container {
   max-width: 900px;
   width: 100%;
@@ -155,6 +200,8 @@ body {
   flex-shrink: 0;
 }
 
+<<<<<<< HEAD
+=======
 /* PDF Section Toggle */
 .pdf-section-toggle {
   margin-top: 25px;
@@ -195,6 +242,7 @@ body {
   accent-color: white;
 }
 
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 
 /* Info Cards */
 .info-cards {
@@ -329,6 +377,8 @@ body {
   margin-top: 8px;
 }
 
+<<<<<<< HEAD
+=======
 .experience-cert {
   margin-top: 12px;
 }
@@ -347,6 +397,7 @@ body {
   height: auto;
 }
 
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 /* References Grid */
 .references-grid {
   display: grid;
@@ -420,6 +471,8 @@ body {
   color: var(--text-color);
 }
 
+<<<<<<< HEAD
+=======
 .tab-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -431,6 +484,7 @@ body {
   transform: none;
 }
 
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 .tab-button:hover {
   background: #f0f0f5;
   transform: translateY(-2px);
@@ -715,6 +769,36 @@ body {
 
 /* Print Mode Overrides for html2pdf */
 .container.print-mode {
+<<<<<<< HEAD
+  page-break-inside: avoid;
+}  
+
+.container.print-mode .header-card,
+.container.print-mode .section-card,
+.container.print-mode .info-card,
+.container.print-mode .timeline-item,
+.container.print-mode .course-card,
+.container.print-mode .reference-card,
+.container.print-mode .info-cards,
+.container.print-mode .personal-info-grid {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+.container.print-mode .tab-content > div {
+  page-break-before: auto;
+  page-break-after: auto;
+}
+
+.container.print-mode #section-inicio,
+.container.print-mode #section-formacion,
+.container.print-mode #section-experiencia,
+.container.print-mode #section-cursos,
+.container.print-mode #section-referencias {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  margin-bottom: 20px;
+=======
   background: #ffffff !important;
   color: #2c3e50 !important;
   padding: 20px !important;
@@ -722,6 +806,7 @@ body {
   border: none !important;
   width: 800px !important;
   min-height: auto !important;
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 }
 
 /* Forzar visibilidad absoluta de textos en modo impresión */
@@ -752,9 +837,13 @@ body {
 }
 
 .container.print-mode .tabs-navigation,
+<<<<<<< HEAD
+.container.print-mode .print-button {
+=======
 .container.print-mode .print-button,
 .container.print-mode .pdf-section-toggle,
 .container.print-mode .certificate-thumb {
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
   display: none !important;
 }
 
@@ -881,6 +970,434 @@ body {
   display: none !important; /* Escondemos el botón de descargar en PDF */
 }
 
+<<<<<<< HEAD
+/* ========================================
+   ESTILOS PARA DESCARGA POR SECCIÓN INDIVIDUAL
+   ======================================== */
+
+/* Encabezado mini que aparece al imprimir una sección */
+.section-print-header {
+  display: none; /* Oculto por defecto */
+}
+
+/* Mostrar encabezado solo cuando se está imprimiendo una sección */
+.printing-section .section-print-header {
+  display: block !important;
+  background: linear-gradient(135deg, #8e6fa3 0%, #a987b9 100%);
+  color: white;
+  padding: 20px 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.printing-section .section-print-header .section-print-name {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+
+.printing-section .section-print-header .section-print-contact {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Estilos generales para sección en modo impresión */
+.printing-section {
+  background: #ffffff !important;
+  padding: 25px !important;
+  border-radius: 12px !important;
+  min-width: 700px !important;
+  box-shadow: none !important;
+}
+
+.printing-section .section-title {
+  color: #6b5b8e !important;
+  border-bottom: 2px solid #6b5b8e;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.printing-section .print-button {
+  display: none !important;
+}
+
+.printing-section .print-header {
+  margin-bottom: 20px;
+}
+
+.printing-section .timeline-item,
+.printing-section .info-card,
+.printing-section .course-card,
+.printing-section .reference-card {
+  background: #ffffff !important;
+  border: 1px solid #e8ecef !important;
+  box-shadow: none !important;
+  margin-bottom: 15px !important;
+  padding: 15px !important;
+  break-inside: avoid;
+}
+
+.printing-section .info-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.printing-section .courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.printing-section .references-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.printing-section .certificate-link {
+  display: none !important;
+}
+
+.printing-section .section-card {
+  background: #ffffff !important;
+  border: 1px solid #e8ecef !important;
+  box-shadow: none !important;
+  padding: 15px !important;
+}
+
+/* ========================================
+   MODAL DE SELECCIÓN DE SECCIONES PARA PDF
+   ======================================== */
+
+.print-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.print-modal {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.print-modal-header {
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  color: white;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.print-modal-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.print-modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.print-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.print-modal-body {
+  padding: 25px;
+}
+
+.print-modal-subtitle {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.print-modal-select-all {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.print-modal-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.print-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.print-checkbox-label:hover {
+  background: var(--light-bg);
+}
+
+.print-checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.print-checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.print-checkbox-label input[type="checkbox"]:checked + .print-checkbox-custom {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.print-checkbox-label input[type="checkbox"]:checked + .print-checkbox-custom::after {
+  content: '✓';
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.print-modal-footer {
+  padding: 20px 25px;
+  background: var(--light-bg);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.print-modal-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.print-modal-btn.cancel {
+  background: white;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.print-modal-btn.cancel:hover {
+  background: var(--light-bg);
+}
+
+.print-modal-btn.confirm {
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  color: white;
+}
+
+.print-modal-btn.confirm:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.print-modal-btn.confirm:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================
+   CONTENEDOR OCULTO PARA IMPRESIÓN PDF
+   ======================================== */
+
+.print-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 800px;
+  background: white;
+  padding: 30px;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  z-index: 9999;
+  overflow: visible;
+}
+
+.print-container.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.print-header-card {
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  color: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.print-header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.print-profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.print-profile-info h1 {
+  font-size: 1.5rem;
+  margin: 0 0 5px 0;
+}
+
+.print-contact-info {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.print-section {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.print-section-title {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.print-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.print-info-grid div {
+  font-size: 0.9rem;
+}
+
+.print-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.print-item:last-child {
+  border-bottom: none;
+}
+
+.print-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.print-badge {
+  background: var(--primary-color);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.print-item-date {
+  color: var(--secondary-color);
+  font-size: 0.85rem;
+  margin-top: 3px;
+}
+
+.print-item-detail {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.print-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.print-course-item {
+  padding: 12px;
+  background: var(--light-bg);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.print-references-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.print-reference-item {
+  padding: 12px;
+  background: var(--light-bg);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+=======
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
 /* Print Media Query for PDF Export */
 @media print {
   body {
@@ -927,4 +1444,8 @@ body {
   .tab-content > div {
     display: block !important;
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d07955a532472cc349855f08a265beab260c6dd7
