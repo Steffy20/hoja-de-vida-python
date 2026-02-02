@@ -997,6 +997,9 @@ body {
   border-radius: 16px;
   width: 90%;
   max-width: 450px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: slideUp 0.3s ease;
   overflow: hidden;
@@ -1049,6 +1052,8 @@ body {
 
 .print-modal-body {
   padding: 25px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .print-modal-subtitle {
@@ -1155,6 +1160,115 @@ body {
   background: #ccc;
   cursor: not-allowed;
   transform: none;
+}
+
+/* ========================================
+   MODAL PDF - RESPONSIVE
+   ======================================== */
+
+@media (max-width: 576px) {
+  .print-modal {
+    width: 95%;
+    max-width: none;
+    margin: 10px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .print-modal-header {
+    padding: 15px 18px;
+  }
+
+  .print-modal-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .print-modal-close {
+    width: 28px;
+    height: 28px;
+    font-size: 1.3rem;
+  }
+
+  .print-modal-body {
+    padding: 15px 18px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .print-modal-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .print-modal-sections {
+    gap: 8px;
+  }
+
+  .print-checkbox-label {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    gap: 10px;
+  }
+
+  .print-checkbox-custom {
+    width: 20px;
+    height: 20px;
+  }
+
+  .print-checkbox-label input[type="checkbox"]:checked + .print-checkbox-custom::after {
+    font-size: 12px;
+  }
+
+  .print-modal-footer {
+    padding: 15px 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .print-modal-btn {
+    width: 100%;
+    padding: 12px 20px;
+    text-align: center;
+  }
+
+  .print-modal-btn.confirm {
+    order: -1; /* Botón principal primero en móvil */
+  }
+}
+
+@media (max-width: 400px) {
+  .print-modal {
+    width: 100%;
+    margin: 5px;
+    border-radius: 12px;
+  }
+
+  .print-modal-header {
+    padding: 12px 15px;
+  }
+
+  .print-modal-header h3 {
+    font-size: 1rem;
+  }
+
+  .print-modal-body {
+    padding: 12px 15px;
+  }
+
+  .print-checkbox-label {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+
+  .print-modal-footer {
+    padding: 12px 15px;
+  }
+
+  .print-modal-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
 }
 
 /* ========================================
